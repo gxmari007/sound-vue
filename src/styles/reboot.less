@@ -1,0 +1,60 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.428571429;
+  color: #333;
+  background-color: #fff;
+}
+
+// Chrome
+::-webkit-input-placeholder {
+  color: gray;
+}
+
+// Firefox 19
+::-moz-placeholder {
+  color: gray;
+}
+
+// IE 10+
+:-ms-input-placeholder {
+  color: gray;
+}
+
+// Firefox 18-
+:-moz-placeholder {
+  color: gray;
+}
+
+a {
+  color: #3381b7;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+img {
+  vertical-align: middle;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
