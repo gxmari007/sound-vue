@@ -6,14 +6,18 @@
       :src="songUrl"
       @play="handlePlay"
       @pause="handlePause"
-      @ended="handleEnded"></audio>
+      @ended="handleEnded"
+      @timeupdate="handleTimeUpdate"
+      v-on:loadedmetadata="handleLoadedMetaData"></audio>
     <div class="container">
       <player-info
         :song-img="song.artwork_url"
         :song-title="songTitle"
         :username="song.user.username"></player-info>
       <player-control :is-playing="isPlaying"></player-control>
-      <player-time></player-time>
+      <player-time
+        :current-time="playTime"
+        :duration="duration"></player-time>
       <player-volume
         :refresh="refresh"
         :random="random"
@@ -32,14 +36,16 @@ import PlayerTime from './PlayerTime';
 import PlayerVolume from './PlayerVolume';
 import { getPlayingSong } from '../vuex/getters';
 import { formatStreamUrl, formatSongTitle } from '../helpers/songs';
-import { togglePlaying } from '../vuex/actions/player';
+import { togglePlaying, changePlayTime } from '../vuex/actions/player';
 
 export default {
   data() {
     return {
+      duration: 0,
       refresh: false,
       random: false,
       muted: false,
+      volume: 1,
     };
   },
   computed: {
@@ -70,6 +76,14 @@ export default {
         this.$els.audio.play();
       }
     },
+    handleLoadedMetaData() {
+      this.duration = Math.floor(this.$els.audio.duration);
+    },
+    handleTimeUpdate() {
+      const currentTime = Math.floor(this.$els.audio.currentTime);
+      if (currentTime === this.playTime) return;
+      this.changePlayTime(currentTime);
+    },
     toggleRefresh() {
       this.refresh = !this.refresh;
     },
@@ -94,10 +108,12 @@ export default {
   vuex: {
     getters: {
       isPlaying: state => state.player.isPlaying,
+      playTime: state => state.player.playTime,
       song: getPlayingSong,
     },
     actions: {
       togglePlaying,
+      changePlayTime,
     },
   },
 };

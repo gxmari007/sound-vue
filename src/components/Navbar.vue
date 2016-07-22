@@ -23,21 +23,27 @@ import { genres, filters } from '../locales/music';
 import { getPlaylist, getPlaylistTime } from '../helpers/songs';
 import { selectPlaylist } from '../vuex/actions/playlists';
 
+function watchQuery() {
+  this.selectPlaylist(this.makePlaylist(this.playlist, this.time));
+}
+
 export default {
   data() {
     return {
       genres,
       filters,
-      genresActive: 0,
     };
   },
   computed: {
     playlist: getPlaylist,
     time: getPlaylistTime,
   },
+  watch: {
+    playlist: watchQuery,
+    time: watchQuery,
+  },
   methods: {
     handleGenre(genre) {
-      this.selectPlaylist(this.makePlaylist(genre, this.time));
       this.$router.go({
         query: {
           q: genre,
@@ -49,7 +55,6 @@ export default {
       if (this.time && ~~this.time === time) {
         time = null;
       }
-      this.selectPlaylist(this.makePlaylist(this.playlist, time));
       this.$router.go({
         query: {
           q: this.playlist,

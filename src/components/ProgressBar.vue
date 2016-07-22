@@ -19,9 +19,6 @@ export default {
     now: {
       type: Number,
       default: 0,
-      coerce(val) {
-        return parseFloat(val, 10);
-      },
     },
     callback: {
       type: Function,
@@ -65,6 +62,7 @@ export default {
   position: relative;
   height: 100%;
   background-color: #a6d2a5;
+  transition: width .1s;
 }
 
 .progress-handle {

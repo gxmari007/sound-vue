@@ -1,6 +1,6 @@
 import * as types from '../mutationTypes';
 
-function changePlayTime({ dispatch }, time) {
+export function changePlayTime({ dispatch }, time) {
   dispatch(types.CHANGE_PLAY_TIME, time);
 }
 

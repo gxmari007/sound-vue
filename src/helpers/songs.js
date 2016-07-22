@@ -40,9 +40,7 @@ export function constructUrl(category) {
 }
 
 export function getImageUrl(url, size = null) {
-  if (!url) {
-    return '';
-  }
+  if (!url) return '';
   url = url.replace('https:', '');
   switch (size) {
     case IMAGE_SIZES.LARGE:
@@ -54,7 +52,7 @@ export function getImageUrl(url, size = null) {
   }
 }
 
-export function formatSongTitle(title) {
+export function formatSongTitle(title = '') {
   if (!title) {
     return '';
   }
@@ -64,4 +62,18 @@ export function formatSongTitle(title) {
 
 export function formatStreamUrl(url) {
   return `${url}?client_id=${CLIENT_ID}`;
+}
+
+function padZero(num = 0, size = 0) {
+  let str = `${num}`;
+  while (str.length < size) {
+    str = `0${str}`;
+  }
+  return str;
+}
+
+export function formatSeconds(num = 0) {
+  const minutes = padZero(Math.floor(num / 60), 2);
+  const seconds = padZero(num % 60, 2);
+  return `${minutes}:${seconds}`;
 }
