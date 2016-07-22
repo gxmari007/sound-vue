@@ -1,6 +1,6 @@
 # sound-vue
 
-一个 UI 基于 [vue.js](https://github.com/vuejs/vue)，路由基于 [vue-router](https://github.com/vuejs/vue-router)，数据处理基于 [vuex](https://github.com/vuejs/vuex)，创意基于 [sound-redux](https://github.com/andrewngu/sound-redux) 的项目。
+一个 UI 基于 [vue.js](https://github.com/vuejs/vue)，路由基于 [vue-router](https://github.com/vuejs/vue-router)，数据流处理基于 [vuex](https://github.com/vuejs/vuex)，创意基于 [sound-redux](https://github.com/andrewngu/sound-redux) 的项目。
 
 ## 使用
 
