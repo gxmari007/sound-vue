@@ -42,7 +42,7 @@ import PlayerVolume from './PlayerVolume';
 import { getPlayingSong } from '../vuex/getters';
 import { formatStreamUrl, formatSongTitle } from '../helpers/songs';
 import storage from '../helpers/storage';
-import { togglePlaying, changePlayTime } from '../vuex/actions/player';
+import { togglePlaying, changePlayTime, changeSong, CHANGE_TYPES } from '../vuex/actions/player';
 
 export default {
   data() {
@@ -82,6 +82,10 @@ export default {
     handleEnded() {
       if (this.refresh) {
         this.$els.audio.play();
+      } else if (this.random) {
+        this.changeSong(CHANGE_TYPES.RANDOM);
+      } else {
+        this.changeSong(CHANGE_TYPES.NEXT);
       }
     },
     handleTimeUpdate() {
@@ -133,6 +137,7 @@ export default {
     actions: {
       togglePlaying,
       changePlayTime,
+      changeSong,
     },
   },
 };
