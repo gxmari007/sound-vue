@@ -15,7 +15,9 @@
         :song-img="song.artwork_url"
         :song-title="songTitle"
         :username="song.user.username"></player-info>
-      <player-control :is-playing="isPlaying"></player-control>
+      <player-control
+        :is-playing="isPlaying"
+        :random="random"></player-control>
       <player-time
         :current-time="playTime"
         :duration="duration"></player-time>
