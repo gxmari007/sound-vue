@@ -62,7 +62,7 @@ export default {
   position: relative;
   height: 100%;
   background-color: #a6d2a5;
-  transition: width .1s;
+  transition: width .2s;
 }
 
 .progress-handle {
