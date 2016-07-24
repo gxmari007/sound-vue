@@ -8,7 +8,8 @@
       @pause="handlePause"
       @ended="handleEnded"
       @timeupdate="handleTimeUpdate"
-      v-on:loadedmetadata="handleLoadedMetaData"></audio>
+      @loadedmetadata="handleLoadedMetaData"
+      @volumechange="handleVolumeChange"></audio>
     <div class="container">
       <player-info
         :song-img="song.artwork_url"
@@ -22,6 +23,8 @@
         :refresh="refresh"
         :random="random"
         :music-mute="muted"
+        :volume="volume"
+        :change-volume="changeVolume"
         :toggle-refresh="toggleRefresh"
         :toggle-random="toggleRandom"
         :toggle-mute="toggleMute"></player-volume>
@@ -36,6 +39,7 @@ import PlayerTime from './PlayerTime';
 import PlayerVolume from './PlayerVolume';
 import { getPlayingSong } from '../vuex/getters';
 import { formatStreamUrl, formatSongTitle } from '../helpers/songs';
+import storage from '../helpers/storage';
 import { togglePlaying, changePlayTime } from '../vuex/actions/player';
 
 export default {
@@ -45,7 +49,7 @@ export default {
       refresh: false,
       random: false,
       muted: false,
-      volume: 1,
+      volume: parseFloat(storage.get('volume')) || 1,
     };
   },
   computed: {
@@ -62,7 +66,9 @@ export default {
     },
   },
   ready() {
-    this.$els.audio.play();
+    const audio = this.$els.audio;
+    audio.volume = this.volume;
+    audio.play();
   },
   methods: {
     handlePlay() {
@@ -76,13 +82,24 @@ export default {
         this.$els.audio.play();
       }
     },
+    handleTimeUpdate() {
+      const currentTime = Math.floor(this.$els.audio.currentTime);
+
+      if (currentTime === this.playTime) return;
+      this.changePlayTime(currentTime);
+    },
     handleLoadedMetaData() {
       this.duration = Math.floor(this.$els.audio.duration);
     },
-    handleTimeUpdate() {
-      const currentTime = Math.floor(this.$els.audio.currentTime);
-      if (currentTime === this.playTime) return;
-      this.changePlayTime(currentTime);
+    handleVolumeChange() {
+      const volume = this.$els.audio.volume;
+
+      if (volume === this.volume) return;
+      storage.set('volume', volume);
+      this.volume = volume;
+    },
+    changeVolume(percent) {
+      this.$els.audio.volume = percent / 100;
     },
     toggleRefresh() {
       this.refresh = !this.refresh;
