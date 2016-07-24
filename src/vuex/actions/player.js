@@ -42,7 +42,9 @@ export function changeSong({ dispatch, state }, changeType) {
   } else if (changeType === CHANGE_TYPES.PREV) {
     newSongIndex = songIndex - 1;
   } else if (changeType === CHANGE_TYPES.RANDOM) {
-    newSongIndex = Math.floor(Math.random() * playlists[currentPlaylist].items.length - 1);
+    do {
+      newSongIndex = Math.floor(Math.random() * playlists[currentPlaylist].items.length - 1);
+    } while (newSongIndex === songIndex);
   }
 
   if (newSongIndex < 0 || newSongIndex >= playlists[currentPlaylist].items.length) {
